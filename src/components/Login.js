@@ -6,6 +6,7 @@ const Login = (props) => {
             <Content>
                 <CTA>
                     <CTALogoOne src="/images/cta-logo-one.svg" alt="" />
+                    <SignUp>GET ALL THERE</SignUp>
                 </CTA>
                 <BgImage />
             </Content>
@@ -53,6 +54,7 @@ const CTA = styled.div`
     display: flex;
     flex-direction: column;         // we should add more content column wise
     width: 100%;
+    text-align: center;
 `;
 
 const CTALogoOne = styled.img`
@@ -61,6 +63,23 @@ const CTALogoOne = styled.img`
     min-height: 1px;
     display: block;
     width: 100%;
+`;
+
+const SignUp = styled.a`
+    font-weight: bold;
+    background-color: #0063e5;
+    color: #f9f9f9;
+    margin-bottom: 12px;
+    width: 100%;
+    letter-spacing: 1.5px;
+    font-size: 18px;
+    padding: 16.5px 0;
+    border: 1px solid transparent;
+    border-radius: 4px;
+
+    &:hover {
+        background-color: #0483ee;
+    }
 `;
 
 export default Login;
