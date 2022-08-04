@@ -6,6 +6,9 @@ const Header = (props) => {
             <Logo>
                 <img src="/images/logo.svg" alt="Disney+" />
             </Logo>
+            <NavMenu>
+                Menu
+            </NavMenu>
         </Nav>
     )
 };
@@ -36,6 +39,23 @@ const Logo = styled.a`
     img {
         display: block;
         width: 100%;
+    }
+`;
+
+const NavMenu = styled.div`
+    align-items: center;
+    display: flex;
+    flex-flow: row nowrap;
+    height: 100%;
+    justify-content: flex-end;
+    margin: 0px;
+    padding: 0px;
+    position: relative;
+    margin-right: auto;
+    margin-left: 25px;
+
+    @media (max-width: 768px) {
+        display: none;
     }
 `;
 
