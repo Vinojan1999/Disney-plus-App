@@ -9,7 +9,8 @@ import {
     selectUserName, 
     selectUserEmail, 
     selectUserPhoto, 
-    setUserLoginDetails 
+    setUserLoginDetails,
+    setSignOutState
 } from "../features/user/userSlice";
 import { useEffect } from "react";
 
@@ -32,24 +33,35 @@ const Header = (props) => {
     // This fucntion is only run when the userName is updated
     
     const handleAuth = () => {
-        signInWithPopup(auth, provider)
-        .then((result) => {
-            const credential = GoogleAuthProvider.credentialFromResult(result);
-            const token = credential.accessToken;
-            const user = result.user;
-            // console.log(result);
-            // console.log(token)
-            // console.log(user)
-            setUser(result.user)
-        })
-        .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            const email = error.customData.email;
-            const credential = GoogleAuthProvider.credentialFromError(error);
-            // console.log(errorCode)
-            // console.log(errorMessage)
-        });
+        if (!userName) {
+            signInWithPopup(auth, provider)
+            .then((result) => {
+                const credential = GoogleAuthProvider.credentialFromResult(result);
+                const token = credential.accessToken;
+                const user = result.user;
+                // console.log(result);
+                // console.log(token)
+                // console.log(user)
+                setUser(result.user)
+            })
+            .catch((error) => {
+                const errorMessage = error.message;
+                const email = error.customData.email;
+                const credential = GoogleAuthProvider.credentialFromError(error);
+                // console.log(errorMessage)
+            });
+        } 
+        else if (userName) {
+            auth.signOut()
+            .then(() => {
+                dispatch(setSignOutState());
+                history.push('/');
+            })
+            .catch((err) => {
+                alert(err.message);
+            })
+        }
+        
     };
 
     const setUser = (user) => {
@@ -99,7 +111,12 @@ const Header = (props) => {
                         </a>
                     </NavMenu>
 
-                    <UserImg src={userPhoto} alt={userName} />
+                    <SignOut>
+                        <UserImg src={userPhoto} alt={userName} />
+                        <DropDown>
+                            <span onClick={handleAuth}>Sign Out</span>
+                        </DropDown>
+                    </SignOut>
                 </>
             )}
 
@@ -219,8 +236,45 @@ const Login = styled.a`
 `;
 
 const UserImg = styled.img`
-    height: 65%;
-    border-radius: 50px;
+    height: 100%;
+`;
+
+const DropDown = styled.div`
+    position: absolute;
+    top: 50px;
+    right: 0px;
+    background: rgb(19, 19, 19);
+    border: 1px solid rgba(151, 151, 151, 0.34);
+    border-radius: 4px;
+    box-shadow: rgb(0 0 0 / 50%) 0px 0px 18px 0px;
+    padding: 10px;
+    font-size: 14px;
+    letter-spacing: 3px;
+    width: 110px;
+    opacity: 0;
+`;
+
+const SignOut = styled.div`
+    position: relative;
+    height: 48px;
+    width: 48px;
+    display: flex;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+
+    ${UserImg} {
+        border-radius: 50px;
+        height: 100%;
+        width: 100%;
+    }
+
+    &:hover {
+        ${DropDown} {
+            opacity: 1;
+            transition-duration: 1s;
+        }
+    }
 `;
 
 export default Header;
