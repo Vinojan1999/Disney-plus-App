@@ -11,6 +11,7 @@ import {
     selectUserPhoto, 
     setUserLoginDetails 
 } from "../features/user/userSlice";
+import { useEffect } from "react";
 
 
 const Header = (props) => {
@@ -20,6 +21,15 @@ const Header = (props) => {
     const userPhoto = useSelector(selectUserPhoto);
     const useremail = useSelector(selectUserEmail);
 
+    useEffect(() => {
+        auth.onAuthStateChanged(async (user) => {
+            if(user) {
+                setUser(user);
+                history.push('/home');
+            }
+        })
+    }, [userName]);
+    // This fucntion is only run when the userName is updated
     
     const handleAuth = () => {
         signInWithPopup(auth, provider)
@@ -51,15 +61,6 @@ const Header = (props) => {
             })
         );
     };
-
-    // const handleAuth = () => {
-    //     auth.signInWithPopup(provider).then((result) => {
-    //         console.log(result);
-    //     })
-    //     .catch((error) => {
-    //         alert(error.message);
-    //     });
-    // };
 
     return (
         <Nav>
@@ -102,10 +103,6 @@ const Header = (props) => {
                 </>
             )}
 
-{/*             
-            <Login onClick={handleAuth}>
-                Login
-            </Login> */}
         </Nav>
     )
 };
@@ -222,7 +219,8 @@ const Login = styled.a`
 `;
 
 const UserImg = styled.img`
-    height: 100%;
+    height: 65%;
+    border-radius: 50px;
 `;
 
 export default Header;
