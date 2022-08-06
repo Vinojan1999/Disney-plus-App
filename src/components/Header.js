@@ -1,6 +1,27 @@
 import styled from "styled-components";
+import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { provider, auth } from "../firebase";
 
 const Header = (props) => {
+
+    const handleAuth = () => {
+        signInWithPopup(auth, provider)
+        .then((result) => {
+            const credential = GoogleAuthProvider.credentialFromResult(result);
+            const token = credential.accessToken;
+            const user = result.user;
+            // console.log(token)
+            // console.log(user)
+        }).catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            const email = error.customData.email;
+            const credential = GoogleAuthProvider.credentialFromError(error);
+            // console.log(errorCode)
+            // console.log(errorMessage)
+        });
+    }
+
     return (
         <Nav>
             <Logo>
@@ -32,6 +53,9 @@ const Header = (props) => {
                     <span>SERIES</span>
                 </a>
             </NavMenu>
+            <Login onClick={handleAuth}>
+                Login
+            </Login>
         </Nav>
     )
 };
@@ -127,6 +151,23 @@ const NavMenu = styled.div`
 
     @media (max-width: 768px) {
         display: none;
+    }
+`;
+
+const Login = styled.a`
+    background-color: rgba(0, 0, 0, 0.6);
+    padding: 8px 16px;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1.7px;
+    border: 1px solid #f9f9f9;
+    border-radius: 4px;
+    transition: all 0.2s ease 0s;
+
+    &:hover {
+        background-color: #f9f9f9;
+        color: #090b13;
+        border-color: transparent;
     }
 `;
 
