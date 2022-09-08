@@ -28,35 +28,37 @@ const Home = (props) => {
             // const movies = [];
             querySnapshot.forEach((doc) => {
                 // movies.push(doc.data().title);
+                console.log(recommends);
                 switch(doc.data().type) {
                     case 'recommend' :
-                        recommends.push({id: doc.id, ...doc.data() });
+                        // recommends.push({id: doc.id, ...doc.data() });
+                        recommends = [...recommends, {id: doc.id, ...doc.data()}];
                         break;
 
                     case 'new':
-                        newDisneys.push({id: doc.id, ...doc.data() });
+                        newDisneys = [...newDisneys, {id: doc.id, ...doc.data()}];
                         break;
 
                     case 'original':
-                        originals.push({id: doc.id, ...doc.data() });
+                        originals = [...originals, {id: doc.id, ...doc.data()}];
                         break;
 
                     case 'trending':
-                        trending.push({id: doc.id, ...doc.data() });
+                        trending = [...trending, {id: doc.id, ...doc.data()}];
                         break;
                 };
             });
             // console.log("Current movies: ", movies);
-        });
 
-        dispatch(
-            setMovies({
-                recommend: recommends,
-                newDisney: newDisneys,
-                original: originals,
-                trending: trending,
-            })
-        );
+            dispatch(
+                setMovies({
+                    recommend: recommends,
+                    newDisney: newDisneys,
+                    original: originals,
+                    trending: trending,
+                })
+            );
+        });
     }, [userName]);
 
     return (
