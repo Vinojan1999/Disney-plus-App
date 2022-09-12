@@ -10,6 +10,19 @@ const Detail = (props) => {
             <ImageTitle>
                 <img src="https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/DDFF0FDF457E092EE53149CE7DB5BD14CB97E27B92D2D087E7C687B4E3073DE2/scale?width=1440&aspectRatio=1.78" alt="" />
             </ImageTitle>
+
+            <ContentMeta>
+                <Controls>
+                    <Player>
+                        <img src="/images/play-icon-black.png" alt="" />
+                        <span>Play</span>
+                    </Player>
+                    <Trailer>
+                        <img src="/images/play-icon-white.png" alt="" />
+                        <span>Trailer</span>
+                    </Trailer>
+                </Controls>
+            </ContentMeta>
         </Container>
     );
 };
@@ -53,16 +66,72 @@ const ImageTitle = styled.div`
     padding-bottom: 24px;
     width: 100%;
 
+    @media (max-width: 768px) {     // modified
+        margin-top: 0;
+    }
+
     img {
         max-width: 600px;
         min-width: 200px;
         width: 35vw;
-        padding: 0 0 0 10%;        // modified
+        margin-left: 5%;        // modified
+    }
+`;
 
-        @media (max-width: 768px) {     // modified
-            width: 55vw;
+const ContentMeta = styled.div`
+    max-width: 874px;
+    margin-left: 5%;        // modified
+`;
+
+const Controls = styled.div`
+    align-items: center;
+    display: flex;
+    flex-flow: row nowrap;
+    margin: 24px 0px;
+    min-height: 56px;
+`;
+
+const Player = styled.button`
+    font-size: 15px;
+    margin: 0 22px 0 0;
+    padding: 0 24px;
+    height: 56px;
+    border-radius: 4px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    display: flex;
+    cursor: pointer;
+    letter-spacing: 1.8px;
+    text-transform: uppercase;
+    background: rgb(249, 249, 249);
+    border: none;
+    color: rgb(0, 0, 0);
+
+    img {
+        width: 32px;
+    }
+
+    &:hover {
+        background: rgb(198, 198, 198);
+    }
+
+    @media (max-width: 768px) {
+        height: 45px;
+        padding: 0 12px;
+        font-size: 12px;
+        margin: 0 10px 0 0;
+
+        img {
+            width: 25px;
         }
     }
+`;
+
+const Trailer = styled(Player)`
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgb(249, 249, 249);
+    color: rgb(249, 249, 249);
 `;
 
 export default Detail;
