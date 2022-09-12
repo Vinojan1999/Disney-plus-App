@@ -25,7 +25,20 @@ const Detail = (props) => {
                         <span />
                         <span />
                     </AddList>
+                    <GroupWatch>
+                        <div>
+                            <img src="/images/group-icon.png" alt="" />
+                        </div>
+                    </GroupWatch>
                 </Controls>
+
+                <SubTitle>
+                    SubTitle
+                </SubTitle>
+
+                <Description>
+                    Description
+                </Description>
             </ContentMeta>
         </Container>
     );
@@ -169,6 +182,49 @@ const AddList = styled.div`
             transform: translateX(-8px) rotate(0deg);
             width: 2px;
         }
+    }
+`;
+
+const GroupWatch = styled.div`
+    height: 44px;
+    width: 44px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    background-color: white;
+
+    div {
+        height: 40px;
+        width: 40px;
+        background: rgba(0, 0, 0, 0.9);
+        border-radius: 50%;
+
+        img {
+            width: 100%;
+        }
+    }
+`;
+
+const SubTitle = styled.div`
+    color: rgb(249, 249, 249);
+    font-size: 16px;
+    min-height: 20px;
+
+    @media (max-width: 768px) {
+        font-size: 14px;
+    }
+`;
+
+const Description = styled.div`
+    line-height: 1.4;
+    font-size: 20px;
+    padding: 16px 0;
+    color: rgb(249, 249, 249);
+
+    @media (max-width: 768px) {
+        font-size: 16px;
     }
 `;
 
