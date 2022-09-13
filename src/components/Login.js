@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import CopyRight from './CopyRight';
 
 const Login = (props) => {
     return (
@@ -16,6 +17,7 @@ const Login = (props) => {
                 </CTA>
                 <BgImage />
             </Content>
+        <CopyRight />
         </Container>
     );
 };
@@ -29,7 +31,7 @@ const Container = styled.section`
 `;
 
 const Content = styled.div`
-    margin-bottom: 10vw;
+    // margin-bottom: 10vw;
     width: 100%;
     position: relative;
     min-height: 100vh;
