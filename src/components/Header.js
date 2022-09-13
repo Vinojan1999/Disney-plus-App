@@ -77,7 +77,9 @@ const Header = (props) => {
     return (
         <Nav>
             <Logo>
-                <img src="/images/logo.svg" alt="Disney+" />
+                <a href="/home">
+                    <img src="/images/logo.svg" alt="Disney+" />
+                </a>
             </Logo>
 
             { !userName ? (
