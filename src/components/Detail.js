@@ -13,30 +13,21 @@ const Detail = (props) => {
     const [detail, setDetailData] = useState({});
 
     useEffect(() => {
-
-        console.log("Test");
-        const docRef = doc(db, "movies", id);
-     
-        
-        async function getString() {
-            const docSnap = await  getDoc(docRef);
-            console.log(docSnap)
-            if (docSnap?.exists()) {
-                setDetailData(docSnap);
-                console.log("Document data:", docSnap.data().type);
-            }
-               
-             else {
-                 
-            // doc.data() will be undefined in this case
-                console.log("No such document!");
-            }
-        }
-           
-
-        
-
+        fetchMovie();
     }, [id] );
+
+    const fetchMovie = async () => {
+        const docRef = doc(db, "movies", id);
+        const docSnap = await getDoc(docRef);
+    
+        if (docSnap?.exists()) {
+          console.log("Movie ->", docSnap.data());
+          setDetailData(docSnap.data());
+        } else {
+          // doc.data() will be undefined in this case
+          console.log("No such document!");
+        }
+    };
 
     // useEffect(() => {
     //     const docRef = db.collection('movies').doc(id);
@@ -55,11 +46,15 @@ const Detail = (props) => {
     return (
         <Container>
             <Background>
-                {/* <img src={doc.data().backgroundImg} alt={doc.data().title} /> */}
+                {
+                    <img src={detail?.backgroundImg} alt={detail?.title} />
+                }
             </Background>
 
             <ImageTitle>
-                {/* <img src={detailData.titleImg} alt={detailData.title} /> */}
+                {
+                    <img src={detail?.titleImg} alt={detail?.title} />
+                }
             </ImageTitle>
 
             <ContentMeta>
@@ -84,11 +79,11 @@ const Detail = (props) => {
                 </Controls>
 
                 <SubTitle>
-                    {/* {detailData.subTitle} */}
+                    {detail?.subTitle}
                 </SubTitle>
 
                 <Description>
-                    {/* {detailData.description} */}
+                    {detail?.description}
                 </Description>
             </ContentMeta>
         </Container>
@@ -261,21 +256,24 @@ const GroupWatch = styled.div`
 const SubTitle = styled.div`
     color: rgb(249, 249, 249);
     font-size: 16px;
+    letter-spacing: 1px;
     min-height: 20px;
 
     @media (max-width: 768px) {
         font-size: 14px;
+        line-height: 1.5em;
     }
 `;
 
 const Description = styled.div`
     line-height: 1.4;
-    font-size: 20px;
+    font-size: 18px;
     padding: 16px 0;
     color: rgb(249, 249, 249);
 
     @media (max-width: 768px) {
         font-size: 16px;
+        padding: 25px 15px 0 0;
     }
 `;
 
