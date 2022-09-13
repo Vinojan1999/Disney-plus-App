@@ -1,14 +1,65 @@
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import styled from 'styled-components';
+import db from "../firebase";
+
+import { doc, getDoc } from "firebase/firestore";
+
+
 
 const Detail = (props) => {
+
+    const { id } = useParams();
+    const [detail, setDetailData] = useState({});
+
+    useEffect(() => {
+
+        console.log("Test");
+        const docRef = doc(db, "movies", id);
+     
+        
+        async function getString() {
+            const docSnap = await  getDoc(docRef);
+            console.log(docSnap)
+            if (docSnap?.exists()) {
+                setDetailData(docSnap);
+                console.log("Document data:", docSnap.data().type);
+            }
+               
+             else {
+                 
+            // doc.data() will be undefined in this case
+                console.log("No such document!");
+            }
+        }
+           
+
+        
+
+    }, [id] );
+
+    // useEffect(() => {
+    //     const docRef = db.collection('movies').doc(id);
+    //     docRef.get().then((doc) => {
+    //         if (doc.exists) {
+    //             setDetailData(doc.data());
+    //         } else {
+    //             console.log("No such documents in Firebase...!");
+    //         }
+    //     })
+    //     .catch((error) => {
+    //         console.log("Error getting documents:", error);
+    //     })
+    // }, [id] );
+
     return (
         <Container>
             <Background>
-                <img src="https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/F6CDB6C0EB2D77EB19BCADA31F85066E001A1F61FA68F4AC3356A73FE076477F/scale?width=1440&aspectRatio=1.78&format=jpeg" alt="" />
+                {/* <img src={doc.data().backgroundImg} alt={doc.data().title} /> */}
             </Background>
 
             <ImageTitle>
-                <img src="https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/DDFF0FDF457E092EE53149CE7DB5BD14CB97E27B92D2D087E7C687B4E3073DE2/scale?width=1440&aspectRatio=1.78" alt="" />
+                {/* <img src={detailData.titleImg} alt={detailData.title} /> */}
             </ImageTitle>
 
             <ContentMeta>
@@ -33,11 +84,11 @@ const Detail = (props) => {
                 </Controls>
 
                 <SubTitle>
-                    SubTitle
+                    {/* {detailData.subTitle} */}
                 </SubTitle>
 
                 <Description>
-                    Description
+                    {/* {detailData.description} */}
                 </Description>
             </ContentMeta>
         </Container>
